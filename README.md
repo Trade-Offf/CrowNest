@@ -12,7 +12,7 @@
 添加脚本权限：`chmod +x install_and_run.sh`
 clone 仓库后只用执行一次，脚本有了执行权限，你就可以直接运行它，无需再次使用 chmod 命令。
 
-导出关注列表：`./install_and_run.sh URL`
+导出关注列表：`./install_and_run.sh （URL-待替换）`
 其中 URL 是需要导出的关注页地址，如：https://juejin.cn/user/1591748568038823/following
 
 ## 注意事项
