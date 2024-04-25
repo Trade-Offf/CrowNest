@@ -1,9 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 
+session = requests.Session()
 
+
+# 获取关注和关注者数量
 def get_followers(url):
-    session = requests.Session()
     response = session.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
 
@@ -23,7 +25,26 @@ def get_followers(url):
     return following_str, followers_str
 
 
-url = "https://juejin.cn/user/18064101621133"  # 请替换为你关注的作者的页面URL
+# 获取基础数据
+def get_baseData(url):
+    response = session.get(url)
+    soup = BeautifulSoup(response.text, "html.parser")
+    baseBlock = soup.find("div", {"class": "block-body"})
+    counts = baseBlock.find_all("span", {"class": "count"})
+    data = {}
+    if len(counts) >= 3:
+        data["likes"] = counts[0].get_text().strip()
+        data["reads"] = counts[1].get_text().strip()
+        data["jueli"] = counts[2].get_text().strip()
+
+    return data
+
+
+url = "https://juejin.cn/user/1591748568038823"  # 请替换为你关注的作者的页面 URL
+
 following_str, followers_str = get_followers(url)
-print(f"关注了: {following_str}")
-print(f"关注者: {followers_str}")
+print(f"following: {following_str}")
+print(f"followers: {followers_str}")
+
+baseData = get_baseData(url)
+print(baseData)
