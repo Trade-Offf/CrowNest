@@ -6,6 +6,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 
 
+# 获取用户关注列表（处理加载与翻页）
 def get_my_following(url):
     # 设置WebDriver路径
     webdriver_service = Service(ChromeDriverManager().install())
@@ -31,6 +32,7 @@ def get_my_following(url):
     return following_list
 
 
+# 新建or覆盖，保存用户关注列表
 def save_following_to_file(following_list, filename):
     with open(filename, "w") as f:
         for user in following_list:
