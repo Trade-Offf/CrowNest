@@ -1,0 +1,132 @@
+[
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "webdriver",
+        "importPath": "selenium",
+        "description": "selenium",
+        "isExtraImport": true,
+        "detail": "selenium",
+        "documentation": {}
+    },
+    {
+        "label": "Service",
+        "importPath": "selenium.webdriver.chrome.service",
+        "description": "selenium.webdriver.chrome.service",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.chrome.service",
+        "documentation": {}
+    },
+    {
+        "label": "ChromeDriverManager",
+        "importPath": "webdriver_manager.chrome",
+        "description": "webdriver_manager.chrome",
+        "isExtraImport": true,
+        "detail": "webdriver_manager.chrome",
+        "documentation": {}
+    },
+    {
+        "label": "By",
+        "importPath": "selenium.webdriver.common.by",
+        "description": "selenium.webdriver.common.by",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.common.by",
+        "documentation": {}
+    },
+    {
+        "label": "get_followers",
+        "kind": 2,
+        "importPath": "掘金工具.getFollowData",
+        "description": "掘金工具.getFollowData",
+        "peekOfCode": "def get_followers(url):\n    response = session.get(url)\n    soup = BeautifulSoup(response.text, \"html.parser\")\n    follow_items = soup.find_all(\"a\", {\"class\": \"follow-item\"})\n    following = []\n    followers = []\n    for follow_item_index, follow_item in enumerate(follow_items):\n        item_count = int(\n            follow_item.find(\"div\", {\"class\": \"item-count\"}).get_text().strip()\n        )",
+        "detail": "掘金工具.getFollowData",
+        "documentation": {}
+    },
+    {
+        "label": "get_baseData",
+        "kind": 2,
+        "importPath": "掘金工具.getFollowData",
+        "description": "掘金工具.getFollowData",
+        "peekOfCode": "def get_baseData(url):\n    response = session.get(url)\n    soup = BeautifulSoup(response.text, \"html.parser\")\n    baseBlock = soup.find(\"div\", {\"class\": \"block-body\"})\n    counts = baseBlock.find_all(\"span\", {\"class\": \"count\"})\n    data = {}\n    if len(counts) >= 3:\n        data[\"likes\"] = counts[0].get_text().strip()\n        data[\"reads\"] = counts[1].get_text().strip()\n        data[\"jueli\"] = counts[2].get_text().strip()",
+        "detail": "掘金工具.getFollowData",
+        "documentation": {}
+    },
+    {
+        "label": "session",
+        "kind": 5,
+        "importPath": "掘金工具.getFollowData",
+        "description": "掘金工具.getFollowData",
+        "peekOfCode": "session = requests.Session()\n# 获取关注和关注者数量\ndef get_followers(url):\n    response = session.get(url)\n    soup = BeautifulSoup(response.text, \"html.parser\")\n    follow_items = soup.find_all(\"a\", {\"class\": \"follow-item\"})\n    following = []\n    followers = []\n    for follow_item_index, follow_item in enumerate(follow_items):\n        item_count = int(",
+        "detail": "掘金工具.getFollowData",
+        "documentation": {}
+    },
+    {
+        "label": "url",
+        "kind": 5,
+        "importPath": "掘金工具.getFollowData",
+        "description": "掘金工具.getFollowData",
+        "peekOfCode": "url = \"https://juejin.cn/user/1591748568038823\"  # 请替换为你关注的作者的页面 URL\nfollowing_str, followers_str = get_followers(url)\nprint(f\"following: {following_str}\")\nprint(f\"followers: {followers_str}\")\nbaseData = get_baseData(url)\nprint(baseData)",
+        "detail": "掘金工具.getFollowData",
+        "documentation": {}
+    },
+    {
+        "label": "baseData",
+        "kind": 5,
+        "importPath": "掘金工具.getFollowData",
+        "description": "掘金工具.getFollowData",
+        "peekOfCode": "baseData = get_baseData(url)\nprint(baseData)",
+        "detail": "掘金工具.getFollowData",
+        "documentation": {}
+    },
+    {
+        "label": "get_my_following",
+        "kind": 2,
+        "importPath": "掘金工具.getMyFollowList",
+        "description": "掘金工具.getMyFollowList",
+        "peekOfCode": "def get_my_following(url):\n    # 设置WebDriver路径\n    webdriver_service = Service(ChromeDriverManager().install())\n    driver = webdriver.Chrome(service=webdriver_service)\n    driver.get(url)\n    # 滚动页面直到没有新的用户加载\n    last_height = driver.execute_script(\"return document.body.scrollHeight\")\n    while True:\n        driver.execute_script(\"window.scrollTo(0, document.body.scrollHeight);\")\n        time.sleep(2)  # 等待新的用户加载",
+        "detail": "掘金工具.getMyFollowList",
+        "documentation": {}
+    },
+    {
+        "label": "save_following_to_file",
+        "kind": 2,
+        "importPath": "掘金工具.getMyFollowList",
+        "description": "掘金工具.getMyFollowList",
+        "peekOfCode": "def save_following_to_file(following_list, filename):\n    with open(filename, \"w\") as f:\n        for user in following_list:\n            f.write(user + \"\\n\")\nif __name__ == \"__main__\":\n    parser = argparse.ArgumentParser(\n        description=\"Get the list of users you are following on Juejin.\"\n    )\n    parser.add_argument(\"url\", help=\"The URL of your following list on Juejin.\")\n    args = parser.parse_args()",
+        "detail": "掘金工具.getMyFollowList",
+        "documentation": {}
+    }
+]
