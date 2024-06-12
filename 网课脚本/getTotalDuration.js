@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const MP4Box = require('mp4box');
 
-const myPath = '/Users/lijialin/Downloads/Webpack5入门与实战'; // 视频文件夹路径，待修改
+const myPath = ''; // 视频文件夹路径，待修改
 
 // 获取单个视频的时长
 function getVideoDuration(filePath) {

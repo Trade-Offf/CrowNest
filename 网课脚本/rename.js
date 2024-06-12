@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const directory = "/Users/lijialin/Downloads/Webpack5入门与实战"; // 填入文件夹路径
+const directory = ""; // 填入文件夹路径
 const oldStr = "【 微信号：itcodeba 】【海量课程 www.todo1024.com】"; // 填入需要替换的字符串
 const newStr = "";  // 填入替换后的字符串
 
