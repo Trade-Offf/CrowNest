@@ -1,29 +1,22 @@
+// 获取文件夹下所有视频的总时长
+// 使用前需安装一个获取媒体信息的库：brew install ffmpeg
+
 const fs = require('fs');
 const path = require('path');
-const MP4Box = require('mp4box');
+const ffmpeg = require('fluent-ffmpeg');
 
-const myPath = ''; // 视频文件夹路径，待修改
+// 使用你的文件夹路径替换下面的路径
+const myPath = '';
 
 // 获取单个视频的时长
 function getVideoDuration(filePath) {
     return new Promise((resolve, reject) => {
-        const fileStream = fs.createReadStream(filePath);
-        const mp4boxFile = MP4Box.createFile();
-        let bytesRead = 0;
-
-        mp4boxFile.onReady = function (info) {
-            resolve(info.duration / info.timescale);
-        };
-
-        fileStream.on('data', function (chunk) {
-            const arrayBuffer = new Uint8Array(chunk).buffer;
-            arrayBuffer.fileStart = bytesRead;
-            bytesRead += chunk.length;
-            mp4boxFile.appendBuffer(arrayBuffer);
-        });
-
-        fileStream.on('end', function () {
-            mp4boxFile.flush();
+        ffmpeg.ffprobe(filePath, function (err, metadata) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(metadata.format.duration);
+            }
         });
     });
 }
